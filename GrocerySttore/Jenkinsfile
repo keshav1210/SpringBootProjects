@@ -1,9 +1,33 @@
-mkdir first-pipeline1
-cd first-pipeline1
-git init
-echo "<project files>" > README.md
-echo "<maven build file>" > pom.xml   # for Java project
-git add .
-git commit -m "Initial commit with Jenkinsfile"
-git remote add origin https://github.com/keshav1210/SpringBootProjects.git
-git push -u origin main
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven_3.9.9'  // This must match the name you configured in Jenkins under "Manage Jenkins → Tools → Maven Installations"
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/keshav1210/SpringBootProjects.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploy step would go here (copy files, restart app, etc.)'
+            }
+        }
+    }
+}
