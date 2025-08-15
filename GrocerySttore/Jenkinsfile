@@ -1,0 +1,9 @@
+mkdir first-pipeline1
+cd first-pipeline1
+git init
+echo "<project files>" > README.md
+echo "<maven build file>" > pom.xml   # for Java project
+git add .
+git commit -m "Initial commit with Jenkinsfile"
+git remote add origin https://github.com/keshav1210/SpringBootProjects.git
+git push -u origin main
